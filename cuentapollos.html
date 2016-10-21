@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>
+      Laboratorio #1
+    </title>
+  </head>
+  <body>
+    <p>
+      <input id="pantalla">
+    </p>
+    <p>
+      <button onclick="sumar()">+</button>
+      <button onclick="restar()">-</button>
+      <button onclick="multiplicar()">x</button>
+      <button onclick="dividir()">/</button>
+      <button onclick="igual()">=</button>
+      <button onclick="limpiar()">CLR</button>
+    </p>
+    <p>
+      <button onclick="addNum(1)">1</button>
+      <button onclick="addNum(2)">2</button>
+      <button onclick="addNum(3)">3</button>
+      <button onclick="addNum(4)">4</button>
+      <button onclick="addNum(5)">5</button>
+    </p>
+    <p>
+      <button onclick="addNum(6)">6</button>
+      <button onclick="addNum(7)">7</button>
+      <button onclick="addNum(8)">8</button>
+      <button onclick="addNum(9)">9</button>
+      <button onclick="addNum(0)">0</button>
+    </p>
+    <script>
+      var ans = 0;
+      var op = '=';
+      var newNum = true;
+      function executeLast(n) {
+        switch(op) {
+          case '+':
+            ans += n;
+            break;
+          case '-':
+            ans -= n;
+            break;
+          case '*':
+            ans *= n;
+            break;
+          case '/':
+            ans /= n;
+            break;
+          case '=':
+            ans = n;
+            break;
+        }
+        newNum = true;
+      }
+      function limpiar() {
+        ans = 0;
+        op = '';
+        document.getElementById("pantalla").value = 0;
+      }
+      function sumar() {
+        executeLast(Number(document.getElementById("pantalla").value));
+        op = '+';
+        document.getElementById("pantalla").value = ans;
+      }
+      function restar() {
+        executeLast(Number(document.getElementById("pantalla").value));
+        op = '-';
+        document.getElementById("pantalla").value = ans;
+      }
+      function multiplicar() {
+        executeLast(Number(document.getElementById("pantalla").value));
+        op = '*';
+        document.getElementById("pantalla").value = ans;
+      }
+      function dividir() {
+        executeLast(Number(document.getElementById("pantalla").value));
+        op = '/';
+        document.getElementById("pantalla").value = ans;
+      }
+      function igual() {
+        executeLast(Number(document.getElementById("pantalla").value));
+        op = '=';
+        document.getElementById("pantalla").value = ans;
+      }
+      function addNum(n) {
+        if(newNum) {
+          document.getElementById("pantalla").value = n;
+          newNum = false;
+        }
+        else { 
+          document.getElementById("pantalla").value =
+            document.getElementById("pantalla").value + n;
+        }
+      }
+    </script>
+  </body>
+</html>
