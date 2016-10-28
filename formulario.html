@@ -64,10 +64,7 @@
           entryToEdit[3].innerHTML = document.getElementById("telefono").value;
           editing = false;
           }
-          document.getElementById("nombre").value = '';
-          document.getElementById("empresa").value = '';
-          document.getElementById("direccion").value = '';
-          document.getElementById("telefono").value = '';
+          limpiar();
         }
         else {
           alert("Solo se permiten numeros en el campo Telefono");
