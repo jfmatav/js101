@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>
+      Laboratorio #2
+    </title>
+  </head>
+  <body>
+    <p>
+      Nombre: <input id="nombre">
+    </p>
+    <p>
+      Empresa: <input id="empresa">
+    </p>
+    <p>
+      Direccion: <input id="direccion">
+    </p>
+    <p>
+      Telefono: <input id="telefono">
+    </p>
+    <p>
+      <button onclick="limpiar()">Limpiar</button>
+      <button onclick="agregar()">Agregar</button>
+    </p>
+
+    <table id="tabla">
+      <tbody id="tablaCuerpo">
+        <tr>
+          <td>Nombre</td><td>Empresa</td><td>Direccion</td><td>Telefono</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      var entries = 0;
+      var telRegExp = new RegExp(/^\d{8}$/);
+      var editing = false;
+      var entryEdited = 0;
+      function limpiar() {
+        document.getElementById("nombre").value = '';
+        document.getElementById("empresa").value = '';
+        document.getElementById("direccion").value = '';
+        document.getElementById("telefono").value = '';
+      }
+      function agregar() {
+        if (telRegExp.test( document.getElementById("telefono").value ) ) {
+          if(!editing) {
+            document.getElementById("tablaCuerpo").innerHTML =
+              document.getElementById("tablaCuerpo").innerHTML +
+              `<tr id="row${entries}"><td>${document.getElementById("nombre").value}</td>` +
+              `<td>${document.getElementById("empresa").value}</td>` +
+              `<td>${document.getElementById("direccion").value}</td>` +
+              `<td>${document.getElementById("telefono").value}</td>` +
+              `<td><button onclick="eliminar(${entries})">&#10008;</button></td>` +
+              `<td><button onclick="editar(${entries})">&#9998;</button></td></tr>` 
+
+            entries++;
+          }
+          else {
+          var id = "row" + entryEdited;
+          var entryToEdit = document.getElementById(id).children;
+          entryToEdit[0].innerHTML = document.getElementById("nombre").value;
+          entryToEdit[1].innerHTML = document.getElementById("empresa").value;
+          entryToEdit[2].innerHTML = document.getElementById("direccion").value;
+          entryToEdit[3].innerHTML = document.getElementById("telefono").value;
+          editing = false;
+          }
+          document.getElementById("nombre").value = '';
+          document.getElementById("empresa").value = '';
+          document.getElementById("direccion").value = '';
+          document.getElementById("telefono").value = '';
+        }
+        else {
+          alert("Solo se permiten numeros en el campo Telefono");
+        }
+      }
+      function eliminar( entry ) {
+        var id = "row" + entry
+        var entryToDelete = document.getElementById(id);
+        entryToDelete.parentNode.removeChild(entryToDelete);
+      }
+      function editar( entry ) {
+        editing = true;
+        entryEdited = entry;
+        var id = "row" + entry;
+        var entryToEdit = document.getElementById(id).children;
+        document.getElementById("nombre").value = entryToEdit[0].innerHTML;
+        document.getElementById("empresa").value = entryToEdit[1].innerHTML;
+        document.getElementById("direccion").value = entryToEdit[2].innerHTML;
+        document.getElementById("telefono").value = entryToEdit[3].innerHTML;
+      }
+    </script>
+  </body>
+</html>
