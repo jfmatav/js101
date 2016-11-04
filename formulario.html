@@ -1,8 +1,9 @@
 <html>
   <head>
     <title>
-      Laboratorio #2
+      Laboratorio #3
     </title>
+    <script src="jquery-3.1.1.js"></script>
   </head>
   <body>
     <p>
@@ -36,32 +37,30 @@
       var editing = false;
       var entryEdited = 0;
       function limpiar() {
-        document.getElementById("nombre").value = '';
-        document.getElementById("empresa").value = '';
-        document.getElementById("direccion").value = '';
-        document.getElementById("telefono").value = '';
+        $('#nombre').val("");
+        $('#empresa').val("");
+        $('#direccion').val("");
+        $('#telefono').val("");
       }
       function agregar() {
-        if (telRegExp.test( document.getElementById("telefono").value ) ) {
+        if ( telRegExp.test( $("#telefono").val() ) ) {
           if(!editing) {
-            document.getElementById("tablaCuerpo").innerHTML =
-              document.getElementById("tablaCuerpo").innerHTML +
-              `<tr id="row${entries}"><td>${document.getElementById("nombre").value}</td>` +
-              `<td>${document.getElementById("empresa").value}</td>` +
-              `<td>${document.getElementById("direccion").value}</td>` +
-              `<td>${document.getElementById("telefono").value}</td>` +
+            $('#tablaCuerpo').append(
+              `<tr id="row${entries}"><td>${$('#nombre').val()}</td>` +
+              `<td>${$('#empresa').val()}</td>` +
+              `<td>${$('#direccion').val()}</td>` +
+              `<td>${$('#telefono').val()}</td>` +
               `<td><button onclick="eliminar(${entries})">&#10008;</button></td>` +
-              `<td><button onclick="editar(${entries})">&#9998;</button></td></tr>` 
+              `<td><button onclick="editar(${entries})">&#9998;</button></td></tr>`)
 
             entries++;
           }
           else {
-          var id = "row" + entryEdited;
-          var entryToEdit = document.getElementById(id).children;
-          entryToEdit[0].innerHTML = document.getElementById("nombre").value;
-          entryToEdit[1].innerHTML = document.getElementById("empresa").value;
-          entryToEdit[2].innerHTML = document.getElementById("direccion").value;
-          entryToEdit[3].innerHTML = document.getElementById("telefono").value;
+          var entryToEdit = $(`#row${entryEdited}`).find('td');
+          entryToEdit[0].innerHTML = $("#nombre").val();
+          entryToEdit[1].innerHTML = $("#empresa").val();
+          entryToEdit[2].innerHTML = $("#direccion").val();
+          entryToEdit[3].innerHTML = $("#telefono").val();
           editing = false;
           }
           limpiar();
@@ -71,19 +70,16 @@
         }
       }
       function eliminar( entry ) {
-        var id = "row" + entry
-        var entryToDelete = document.getElementById(id);
-        entryToDelete.parentNode.removeChild(entryToDelete);
+        $(`#row${entry}`).remove();
       }
       function editar( entry ) {
         editing = true;
         entryEdited = entry;
-        var id = "row" + entry;
-        var entryToEdit = document.getElementById(id).children;
-        document.getElementById("nombre").value = entryToEdit[0].innerHTML;
-        document.getElementById("empresa").value = entryToEdit[1].innerHTML;
-        document.getElementById("direccion").value = entryToEdit[2].innerHTML;
-        document.getElementById("telefono").value = entryToEdit[3].innerHTML;
+        var entryToEdit = $(`#row${entryEdited}`).find('td');
+        $("#nombre").val( entryToEdit[0].innerHTML );
+        $("#empresa").val( entryToEdit[1].innerHTML );
+        $("#direccion").val( entryToEdit[2].innerHTML );
+        $("#telefono").val( entryToEdit[3].innerHTML );
       }
     </script>
   </body>
